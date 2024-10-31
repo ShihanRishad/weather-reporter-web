@@ -1,0 +1,16 @@
+Latitude: 40.71427
+Lonitude: -74.00597
+
+Current temperature in new york is 23.3°C
+Wind speed is 14.3 km/h
+Humidity is 47%
+Precipitation is 0.0 mm
+Visibility is 37800.0m
+Cloud cover is 100%
+Pressure is 1020.3hPa
+Dew point is 11.4°C
+Max temperature today is 27.2°C
+Min temperature today is 13.9°C
+Daily precipitation is 0.0mm
+Sunrise at 2024-10-31T07:26
+Sunset at 2024-10-31T17:53

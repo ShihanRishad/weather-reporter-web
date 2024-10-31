@@ -1,0 +1,16 @@
+Latitude: 25.99825
+Lonitude: 62.98639
+
+Current temperature in kotwali is 29.5°C
+Wind speed is 2.2 km/h
+Humidity is 44%
+Precipitation is 0.0 mm
+Visibility is 24140.0m
+Cloud cover is 0%
+Pressure is 1013.8hPa
+Dew point is 15.9°C
+Max temperature today is 37.5°C
+Min temperature today is 25.6°C
+Daily precipitation is 0.0mm
+Sunrise at 2024-10-31T06:56
+Sunset at 2024-10-31T18:06

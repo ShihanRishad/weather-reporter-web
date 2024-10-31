@@ -1,0 +1,16 @@
+Latitude: 22.3384
+Lonitude: 91.83168
+
+Current temperature in chittagong is 27.9°C
+Wind speed is 4.0 km/h
+Humidity is 85%
+Precipitation is 0.0 mm
+Visibility is 24140.0m
+Cloud cover is 0%
+Pressure is 1009.5hPa
+Dew point is 25.1°C
+Max temperature today is 33.1°C
+Min temperature today is 25.5°C
+Daily precipitation is 0.6mm
+Sunrise at 2024-10-31T05:56
+Sunset at 2024-10-31T17:15

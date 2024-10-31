@@ -1,0 +1,34 @@
+* {
+  font-family: "Ubuntu", sans-serif;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.headercontainer {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  font-size: 10px;
+}
+
+.inputarea {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  justify-content: center;
+  padding: 30px;
+}
+
+.inputbox {
+  position: inline;
+}

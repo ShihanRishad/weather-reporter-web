@@ -1,0 +1,16 @@
+Latitude: 23.7104
+Lonitude: 90.40744
+
+Current temperature in dhaka is 29.5°C
+Wind speed is 3.2 km/h
+Humidity is 70%
+Precipitation is 0.0 mm
+Visibility is 24140.0m
+Cloud cover is 42%
+Pressure is 1008.9hPa
+Dew point is 23.4°C
+Max temperature today is 32.3°C
+Min temperature today is 24.9°C
+Daily precipitation is 2.5mm
+Sunrise at 2024-10-31T06:04
+Sunset at 2024-10-31T17:20
