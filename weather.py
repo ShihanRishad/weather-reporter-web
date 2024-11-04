@@ -15,10 +15,10 @@ def get_coordinates(city): # Take city as argumant.
     else: # If not valid, return none
         return None, None
     
-def create_directories(base_dir):
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    report_dir = os.path.join(base_dir, current_time)
-    suffix = 1
+def create_directories(base_dir): # Function to store the weather reports
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") # Get the current time
+    report_dir = os.path.join(base_dir, current_time) # Create a directory for every report based on the time
+    suffix = 1 # A suffix so names don't mixed up
     
     while os.path.exists(report_dir):
         report_dir = os.path.join(base_dir, f"{current_time}_{suffix}")
@@ -28,12 +28,13 @@ def create_directories(base_dir):
     return report_dir
 
 def generate_qr_code(text, report_dir):
-    qr_code_url = "https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=" + text
+    qr_code_url = "https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=" + text + "&format=svg"
     response = requests.get(qr_code_url)
     qr_code_image = response.content
-    qr_code_file = os.path.join(report_dir, "weather_report_qr.png")
+    qr_code_file = os.path.join(report_dir, "weather_report_qr.svg")
     with open(qr_code_file, 'wb') as file:
         file.write(qr_code_image)
+    return qr_code_image
 
 
 def get_weather(latitude, longitude): # Take latitude and longitue as argumant
@@ -54,7 +55,7 @@ def generate_report(city):
 
     
     
-    if latitude and longitude: # Do this if not empty
+    if latitude and longitude: # Complete the tasks if the locations exists
         current_time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         weather = get_weather(latitude, longitude) # Then get the weather
         # Get details from the weather data
@@ -116,8 +117,8 @@ def generate_report(city):
             file.write(report) # Open the file and write report in it.
 
         # Generate QR code
-        generate_qr_code(report, report_dir)
-        return report # Return the report
+        qr_code_image = generate_qr_code(report, report_dir)
+        return report, qr_code_image # Return the report
 
     else: # Return error messege if the location is invalid
         return "Couldn't find the location. Please check the city name and try again. And check your internet connection."

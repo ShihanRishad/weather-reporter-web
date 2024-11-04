@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
-import weather  # Assuming weather.py is in the same directory
+import weather
 
 app = Flask(__name__)
-CORS(app)  # Enable Cross-Origin Resource Sharing
 
 @app.route('/')
 def home():
@@ -11,14 +9,12 @@ def home():
 
 @app.route('/weather', methods=['POST'])
 def get_weather():
-    try:
-        city = request.form['city']
-        report = weather.main(city)
-        print(f"Generated Report: {report}")
-        return jsonify({'report': report})
-    except Exception as e:
-        print(f"Error: {e}")
-        return jsonify({'error': str(e)}), 500
+    city = request.form['city']
+    report, qr_code_image = weather.main(city)
+
+    if report and qr_code_image:
+        return jsonify({'report': report, 'qr_code_image': qr_code_image.decode('utf-8')})
+    return jsonify({'report': report})
 
 if __name__ == '__main__':
     app.run(debug=True)

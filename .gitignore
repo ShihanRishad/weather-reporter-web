@@ -3,3 +3,6 @@ Weather_reports_python/
 .codesandbox
 __pycache__
 test.py
+.vscode
+.github
+.venv
