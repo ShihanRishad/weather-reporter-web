@@ -8,6 +8,7 @@ document.getElementById('getWeatherButton').addEventListener('click', function()
       },
       body: 'city=' + encodeURIComponent(city)
   })
+  
   .then(response => response.json())
   .then(data => {
       document.getElementById('weatherReportContent').textContent = data.report;
