@@ -16,20 +16,22 @@ def get_coordinates(city): # Take city as argumant.
         return None, None
     
 def is_writable(path):
-    if path is None:  # Check if path is None
-        return False    # Return False immediately if it is
-
-    try:
-        testfile = os.path.join(path, 'testfile')
-        with open(testfile, 'w') as f:
-            f.write('test')
-        os.remove(testfile)  # Cleanup test file
-        return True
-    except OSError:  # Use OSError to catch permission errors and other file system errors.
+    if path is None:
         return False
 
+    test_dir = os.path.join(path, ".test_writability")
+
+    try:
+        os.makedirs(path, exist_ok=True)      # Create the base directory if it doesn't exist
+        os.makedirs(test_dir, exist_ok=True)  # Now create the hidden test directory
+        # ... (rest of the test code - create file, write, delete, remove test_dir)
+        return True
+    except OSError:
+        return False
+
+
 def create_directories(base_dir):
-    if not is_writable(base_dir):
+    if is_writable('test') == False:
         return None #Return None instead of False
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     report_dir = os.path.join(base_dir, current_time)
@@ -44,7 +46,7 @@ def generate_qr_code(text, report_dir):
     qr_code_url = "https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=" + text + "&format=svg"
     response = requests.get(qr_code_url)
     qr_code_image = response.content
-    if is_writable(report_dir):
+    if is_writable('kaka'):
         qr_code_file = os.path.join(report_dir, "weather_report_qr.svg")
         with open(qr_code_file, 'wb') as file:
             file.write(qr_code_image)
