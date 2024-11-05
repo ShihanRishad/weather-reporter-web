@@ -15,25 +15,36 @@ def get_coordinates(city): # Take city as argumant.
     else: # If not valid, return none
         return None, None
     
-def create_directories(base_dir): # Function to store the weather reports
-    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") # Get the current time
-    report_dir = os.path.join(base_dir, current_time) # Create a directory for every report based on the time
-    suffix = 1 # A suffix so names don't mixed up
-    
-    while os.path.exists(report_dir):
-        report_dir = os.path.join(base_dir, f"{current_time}_{suffix}")
-        suffix += 1
+def is_writable(path):
+    try:
+        testfile = os.path.join(path, 'testfile')
+        with open(testfile, 'w') as f:
+            f.write('test')
+        os.remove(testfile)  # Cleanup test file
+        return True
+    except IOError:
+        return False
 
-    os.makedirs(report_dir)
-    return report_dir
+def create_directories(base_dir): # Function to store the weather reports
+    if is_writable(base_dir):
+        current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") # Get the current time
+        report_dir = os.path.join(base_dir, current_time) # Create a directory for every report based on the time
+        suffix = 1 # A suffix so names don't mixed up
+        while os.path.exists(report_dir):
+            report_dir = os.path.join(base_dir, f"{current_time}_{suffix}")
+            suffix += 1
+        os.makedirs(report_dir)
+        return report_dir
 
 def generate_qr_code(text, report_dir):
     qr_code_url = "https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=" + text + "&format=svg"
     response = requests.get(qr_code_url)
     qr_code_image = response.content
-    qr_code_file = os.path.join(report_dir, "weather_report_qr.svg")
-    with open(qr_code_file, 'wb') as file:
-        file.write(qr_code_image)
+    if is_writable(report_dir):
+        qr_code_file = os.path.join(report_dir, "weather_report_qr.svg")
+        with open(qr_code_file, 'wb') as file:
+            file.write(qr_code_image)
+   # print(qr_code_image)
     return qr_code_image
 
 
@@ -90,7 +101,7 @@ def generate_report(city):
         udepoint = ucurrent_weather.get('dewpoint_2m', 'N/A') # Get dew point unit
 
         # Print the weather details
-        report = (f"Report generated at {current_time}\n\n"
+        report = (f"Report generated at {current_time} (Server Time)\n\n"
                   f"Latitude: {latitude}\n"
                   f"Lonitude: {longitude}\n\n"
                   f"Current temperature in {city} is {temperature}{utemperature}\n"
@@ -110,11 +121,11 @@ def generate_report(city):
 
         # Create directories and write report to a file
         base_dir = "Weather_reports_Python"
-        report_dir = create_directories(base_dir) # Create directory if doesn't exists
-        report_file = os.path.join(report_dir, "report.txt") # Add the file in the path
-
-        with open(report_file, 'w') as file: 
-            file.write(report) # Open the file and write report in it.
+        if create_directories(base_dir):
+            report_dir = create_directories(base_dir) # Create directory if doesn't exists
+            report_file = os.path.join(report_dir, "report.txt") # Add the file in the path
+            with open(report_file, 'w') as file: 
+                file.write(report) # Open the file and write report in it.
 
         # Generate QR code
         qr_code_image = generate_qr_code(report, report_dir)
@@ -124,5 +135,3 @@ def generate_report(city):
         return "Couldn't find the location. Please check the city name and try again. And check your internet connection."
 def main(city):
     return generate_report(city)
-
-# print(main("dhaka"))

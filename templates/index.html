@@ -8,9 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"
     />
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -23,16 +21,20 @@
         <h1>Weather Reporter</h1>
       </div>
     </div>
-    <div id="weatherReport" style="display: none">
-      <pre id="weatherReportContent"></pre>
+    <div class="reportcontainer">
+      <div id="weatherReport" >
+        <h1>Generated Report</h1>
+        <pre id="weatherReportContent">The report will be shown here.</pre>
+        <div id="qrCode" style="display: none;"></div>
+      </div>
     </div>
-    <div id="qrCode" style="display: none;"> <img id="qrCodeImage" alt="QR Code"> </div>
     <div class="inputarea">
       <div class="inputbox">
         <input type="text" id="city" placeholder="Enter city" />
-        <button id="getWeatherButton">Get Weather</button>
+        <button id="getWeatherButton"><img src="static/weather-partly-cloudy-day-16-filled.svg" alt="weather"><span>Get Weather</span></button>
       </div>
     </div>
+    <script src="https://type-wave-library.vercel.app/TypeWave.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>
