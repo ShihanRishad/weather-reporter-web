@@ -10,11 +10,13 @@ def home():
 @app.route('/weather', methods=['POST'])
 def get_weather():
     city = request.form['city']
-    report, qr_code_image = weather.main(city)
+    result = weather.main(city)  # Store the result (could be a tuple or an error message).
 
-    if report and qr_code_image:
+    if isinstance(result, tuple): #If main is executed properly
+        report, qr_code_image = result
         return jsonify({'report': report, 'qr_code_image': qr_code_image.decode('utf-8')})
-    return jsonify({'report': report})
+    else: #If error in main
+        return jsonify({'report': result, 'error': True})  # Indicate an error to the frontend
 
 if __name__ == '__main__':
     app.run(debug=True)

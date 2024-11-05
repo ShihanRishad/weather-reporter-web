@@ -16,25 +16,29 @@ def get_coordinates(city): # Take city as argumant.
         return None, None
     
 def is_writable(path):
+    if path is None:  # Check if path is None
+        return False    # Return False immediately if it is
+
     try:
         testfile = os.path.join(path, 'testfile')
         with open(testfile, 'w') as f:
             f.write('test')
         os.remove(testfile)  # Cleanup test file
         return True
-    except IOError:
+    except OSError:  # Use OSError to catch permission errors and other file system errors.
         return False
 
-def create_directories(base_dir): # Function to store the weather reports
-    if is_writable(base_dir):
-        current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") # Get the current time
-        report_dir = os.path.join(base_dir, current_time) # Create a directory for every report based on the time
-        suffix = 1 # A suffix so names don't mixed up
-        while os.path.exists(report_dir):
-            report_dir = os.path.join(base_dir, f"{current_time}_{suffix}")
-            suffix += 1
-        os.makedirs(report_dir)
-        return report_dir
+def create_directories(base_dir):
+    if not is_writable(base_dir):
+        return None #Return None instead of False
+    current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    report_dir = os.path.join(base_dir, current_time)
+    suffix = 1
+    while os.path.exists(report_dir):
+        report_dir = os.path.join(base_dir, f"{current_time}_{suffix}")
+        suffix += 1
+    os.makedirs(report_dir)
+    return report_dir
 
 def generate_qr_code(text, report_dir):
     qr_code_url = "https://api.qrserver.com/v1/create-qr-code/?size=550x550&data=" + text + "&format=svg"
@@ -121,14 +125,15 @@ def generate_report(city):
 
         # Create directories and write report to a file
         base_dir = "Weather_reports_Python"
-        if create_directories(base_dir):
-            report_dir = create_directories(base_dir) # Create directory if doesn't exists
+        report_dir = create_directories(base_dir)
+        if report_dir is not None:
+           # report_dir = create_directories(base_dir) # Create directory if doesn't exists
             report_file = os.path.join(report_dir, "report.txt") # Add the file in the path
             with open(report_file, 'w') as file: 
                 file.write(report) # Open the file and write report in it.
 
-        # Generate QR code
         qr_code_image = generate_qr_code(report, report_dir)
+        # Generate QR code
         return report, qr_code_image # Return the report
 
     else: # Return error messege if the location is invalid
