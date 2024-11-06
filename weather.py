@@ -11,7 +11,8 @@ def get_coordinates(city): # Take city as argumant.
         coordinates = data['results'][0] # Get the first result
         latitude = coordinates['latitude'] # Get the latitude from the json
         longitude = coordinates['longitude'] # Get the longitude
-        return latitude, longitude # Return them
+        country = coordinates['country'] # Get the name of the country
+        return latitude, longitude, country # Return them
     else: # If not valid, return none
         return None, None
     
@@ -61,7 +62,7 @@ def get_weather(latitude, longitude): # Take latitude and longitue as argumant
     return weather_data # Return it.
 
 def generate_report(city):
-    latitude, longitude = get_coordinates(city) # Get longitude and lattude
+    latitude, longitude, country = get_coordinates(city) # Get longitude and lattude
     print(f"Latutude: {latitude} \nLongitude: {longitude}\n")
     if latitude is None or longitude is None: 
         return "Couldn't find the location. Please check the city name and try again." 
@@ -72,7 +73,7 @@ def generate_report(city):
 
     
     
-    if latitude and longitude: # Complete the tasks if the locations exists
+    if latitude and longitude and country: # Complete the tasks if the locations exists
         current_time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         weather = get_weather(latitude, longitude) # Then get the weather
         # Get details from the weather data
@@ -109,7 +110,8 @@ def generate_report(city):
         # Print the weather details
         report = (f"Report generated at {current_time} (Server Time)\n\n"
                   f"Latitude: {latitude}\n"
-                  f"Lonitude: {longitude}\n\n"
+                  f"Lonitude: {longitude}\n"
+                  f"Name of the country is {country}\n\n"
                   f"Current temperature in {city} is {temperature}{utemperature}\n"
                   f"Wind speed is {wind_speed} {uwind_speed}\n"
                   f"Humidity is {humidity}{uhumidity}\n"

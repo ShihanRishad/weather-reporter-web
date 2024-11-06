@@ -4,7 +4,11 @@ Previously, I created a simple python project for creating a weather report base
 
 ## Usage
 
-To try this out, clone this repo into your local mechine and install `flask` and `requests` pip library, then run this in the terminal:
+To try this out, clone this repo into your local mechine and first run this command:
+```shell
+pip install -r requirements.txt
+```
+ then run this in the terminal:
 <pre>
 python app.py
 </pre>
